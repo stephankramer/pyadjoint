@@ -273,7 +273,7 @@ def test_assemble_recompute():
     bc = DirichletBC(V, Constant(1), "on_boundary")
     f = Function(V)
     f.vector()[:] = 2
-    expr = Constant(assemble(f**2*dx))
+    #expr = Constant(assemble(f**2*dx))
     J = assemble(expr**2*dx(domain=mesh))
     Jhat = ReducedFunctional(J, f)
 
