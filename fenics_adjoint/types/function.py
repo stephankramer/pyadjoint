@@ -18,7 +18,9 @@ class Function(OverloadedType, backend.Function):
         return Function(c.function_space(), c.vector())
 
     def assign(self, other, *args, **kwargs):
-        annotate = annotate_tape(kwargs)
+        # do not annotate in case of self assignment
+        annotate = annotate_tape(kwargs)  and not self==other
+
         if annotate:
             from .types import create_overloaded_object
             other = create_overloaded_object(other)
