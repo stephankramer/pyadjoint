@@ -173,6 +173,8 @@ class AddBlock(Block):
 
     def evaluate_adj(self):
         adj_input = self.get_outputs()[0].get_adj_output()
+        if adj_input is None:
+            return
 
         self.get_dependencies()[0].add_adj_output(adj_input)
         self.get_dependencies()[1].add_adj_output(adj_input)
@@ -190,6 +192,8 @@ class SubBlock(Block):
 
     def evaluate_adj(self):
         adj_input = self.get_outputs()[0].get_adj_output()
+        if adj_input is None:
+            return
 
         self.get_dependencies()[0].add_adj_output(adj_input)
         self.get_dependencies()[1].add_adj_output(adj_input)
@@ -208,8 +212,10 @@ class MulBlock(Block):
 
     def evaluate_adj(self):
         adj_input = self.get_outputs()[0].get_adj_output()
-        deps = self.get_dependencies()
+        if adj_input is None:
+            return
 
+        deps = self.get_dependencies()
         deps[0].add_adj_output(adj_input * deps[1].get_saved_output())
         deps[1].add_adj_output(adj_input * deps[0].get_saved_output())
 
